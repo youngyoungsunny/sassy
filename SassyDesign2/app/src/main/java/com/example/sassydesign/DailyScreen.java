@@ -105,8 +105,11 @@ public class DailyScreen extends Fragment {
 
         }
 
+        //테스트여
+        //테스트
 
     }
+
 
 //    public void setTotal(){
 //        dailyOutcome.setText(""+totalOutcome);
