@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         DailyScreen dailyScreen = new DailyScreen();
         getSupportFragmentManager().beginTransaction().replace(R.id.container, dailyScreen).commit();
-
-        //수정한거@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     
     }
 }
