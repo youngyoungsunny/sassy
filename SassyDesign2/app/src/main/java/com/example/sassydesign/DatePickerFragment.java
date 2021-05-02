@@ -30,7 +30,7 @@ public class DatePickerFragment extends DialogFragment
     }
 
     @Override
-    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+    public void onDateSet(android.widget.DatePicker datePicker, int year, int month, int day) {
         HandAddActivity activity = (HandAddActivity)getActivity();
         activity.processDatePickerResult(year, month, day);
     }

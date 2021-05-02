@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DailyScreen extends Fragment {
@@ -32,7 +31,7 @@ public class DailyScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_daily_screen, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.daily_screen, container, false);
 
         //선언문
         String title = null;
@@ -105,11 +104,8 @@ public class DailyScreen extends Fragment {
 
         }
 
-        //테스트여
-        //테스트
 
     }
-
 
 //    public void setTotal(){
 //        dailyOutcome.setText(""+totalOutcome);
