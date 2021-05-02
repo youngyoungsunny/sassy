@@ -7,7 +7,6 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/MainImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
@@ -18,7 +17,6 @@
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <TextView
-        android:id="@+id/MainName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="가계부 이름"
@@ -39,7 +37,6 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/LoginText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
