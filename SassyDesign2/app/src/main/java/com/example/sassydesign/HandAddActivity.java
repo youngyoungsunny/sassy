@@ -31,6 +31,8 @@ public class HandAddActivity extends AppCompatActivity {
             }
         });*/
 
+        //Test
+
         dateButton = findViewById(R.id.dateButton);
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
