@@ -8,6 +8,8 @@ public class Item {
     String title;
     String cacheOrCard;
 
+    // 냠냠
+    
     int cursor;
 
     ArrayList<String> itemList;
