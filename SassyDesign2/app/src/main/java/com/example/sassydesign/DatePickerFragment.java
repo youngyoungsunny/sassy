@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 
 import java.util.Calendar;
 
+//HandAddActivity에서 날짜 선택하는 거 도와주는 프래그먼트(건들면 안 됨)
 public class DatePickerFragment extends DialogFragment
                         implements DatePickerDialog.OnDateSetListener {
 

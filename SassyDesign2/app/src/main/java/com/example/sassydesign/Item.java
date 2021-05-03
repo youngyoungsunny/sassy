@@ -1,23 +1,22 @@
 package com.example.sassydesign;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Item {
 
-    String date; //나중에 Date객체로 바꿀 예정!!!
+    Date date;
     String title;
     String cacheOrCard;
-
-    // 냠냠
     
-    int cursor;
+    int subCursor;
 
     ArrayList<String> itemList;
     ArrayList<String> priceList;
     ArrayList<String> categoryList;
     ArrayList<String> quantityList;
 
-    public Item(String date, String title, String cacheOrCard,
+    public Item(Date date, String title, String cacheOrCard,
                 ArrayList<String> itemList, ArrayList<String>  categoryList,
                 ArrayList<String>  quantityList, ArrayList<String>  priceList){
         this.date = date;
@@ -79,11 +78,19 @@ public class Item {
         this.quantityList = quantityList;
     }
 
-    public void setCursor(int cursor){
-        this.cursor = cursor;
+    public Date getDate() {
+        return date;
     }
 
-    public int getCursor(){
-        return cursor;
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setSubCursor(int subCursor){
+        this.subCursor = subCursor;
+    }
+
+    public int getSubCursor(){
+        return subCursor;
     }
 }

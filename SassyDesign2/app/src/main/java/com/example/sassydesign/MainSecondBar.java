@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.tabs.TabLayout;
 
+//날짜별의 상단바(일일, 한달, 연간)
+//main_second_bar.xml
 public class MainSecondBar extends Fragment {
 
     DailyScreen dailyScreen;

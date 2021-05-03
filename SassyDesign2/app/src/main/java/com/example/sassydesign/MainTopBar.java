@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.tabs.TabLayout;
 
+//최상단바 액티비티(날짜별, 카테고리별, 현금/카드별)
+//main_top_bar.xml
 public class MainTopBar extends Fragment {
 
     MainSecondBar mainSecondBar;

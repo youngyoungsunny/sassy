@@ -37,6 +37,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         items.add(item);
     }
 
+    public void removeItem(){
+        items.clear();
+        this.notifyDataSetChanged();
+    }
+
     public void setItems(ArrayList<Item> items){
         this.items = items;
     }
@@ -78,9 +83,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
             itemTitle.setText(item.getTitle());
             itemCacheOrCard.setText(item.getCacheOrCard());
-            for(int i = 0 ; i < item.cursor ; i++){
+            for(int i = 0; i < item.subCursor; i++){
 
-                if (i != item.cursor) {
+                if (i != item.subCursor) {
                     items += item.getItemList().get(i)+"\n";
                     categories += item.getCategoryList().get(i)+"\n";
                     quantities += item.getQuantityList().get(i)+"\n";
@@ -95,12 +100,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                 itemDetail.setText(items);
                 itemCategory.setText(categories);
-                itemPrice.setText(quantities);
-                itemQuantity.setText(price);
+                itemPrice.setText(price);
+                itemQuantity.setText(quantities);
 
             }
 
         }
 
     }
+
 }

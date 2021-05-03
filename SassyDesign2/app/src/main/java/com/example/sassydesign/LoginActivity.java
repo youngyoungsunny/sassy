@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+//로그인 화면 액티비티
+//log_in.xml
 public class LoginActivity extends AppCompatActivity {
 
     public static Activity activity;
