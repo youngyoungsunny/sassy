@@ -21,7 +21,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/signupID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
@@ -30,14 +30,15 @@
             android:inputType="textPersonName" />
 
         <Button
-            android:id="@+id/button"
+            android:onClick="OnClickHandler"
+            android:id="@+id/dupCheckButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="중복체크" />
     </LinearLayout>
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/signupPW"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -46,7 +47,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/signupName"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
