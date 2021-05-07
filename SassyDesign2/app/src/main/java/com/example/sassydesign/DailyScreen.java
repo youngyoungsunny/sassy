@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class DailyScreen extends Fragment implements DatePickerDialog.OnDateSetL
 
         //오늘 날짜 가져와서 설정
         todayDate = new Date(now);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         initDate = sdf.format(todayDate);
         dailyDateButton.setText(initDate);
 
@@ -92,7 +93,7 @@ public class DailyScreen extends Fragment implements DatePickerDialog.OnDateSetL
         });
 
         //합계 지출, 수입은 데베 연결 후 작업할게
-        //setTotal();
+        setTotal();
 
         return rootView;
     }
@@ -128,10 +129,16 @@ public class DailyScreen extends Fragment implements DatePickerDialog.OnDateSetL
             e.printStackTrace();
         }
 
-        //item객체 생성할 null 객체
-        Item detailItem = null;
 
         for(int i = 0 ; i<cursor; i++){
+
+            //item객체 생성할 null 객체
+            Item detailItem = null;
+            itemList.clear();
+            categoryList.clear();
+            quantityList.clear();
+            priceList.clear();
+
             //"제목" 대신 데베에서 가져온 제목 가져오기
             title = "제목";
             //"카드" 대신 데베에서 가져온 현금/카드 가져오기
@@ -177,20 +184,39 @@ public class DailyScreen extends Fragment implements DatePickerDialog.OnDateSetL
     }
 
 
+    public void setTotal(){
+
+        //품목 하나
+        for(int i = 0 ; i<itemAdapter.getItemCount() ; i++){
+            //품목 하나 안의 세부 품목
+            Log.d("i",i+"");
+            for(int j = 0; j<itemAdapter.getItem(i).getPriceList().size(); j++){
+                //그 품목의 가격이 음수일 때(지출일 때)
+                Log.d("j",j+"");
+                if(Integer.parseInt(itemAdapter.getItem(i).getPriceList().get(j)) < 0){
+                    totalOutcome += Integer.parseInt(itemAdapter.getItem(i).getPriceList().get(j));
+                    Log.d("totalOutcome",totalOutcome+"");
+                }
+                //그 품목의 가격이 양수일 때(수입일 때)
+                else{
+                    totalIncome += Integer.parseInt(itemAdapter.getItem(i).getPriceList().get(j));
+                    Log.d("totalIncome",totalIncome+"");
+                }
+            }
+        }
 
 
-//    public void setTotal(){
-//        dailyOutcome.setText(""+totalOutcome);
-//        dailyIncome.setText("+"+totalIncome);
-//
-//        total = totalIncome + totalOutcome;
-//        if (total>0)
-//        {
-//            dailyTotal.setText("+" + total);
-//        }
-//        else
-//        {
-//            dailyTotal.setText(""+total);
-//        }
-//    }
+        dailyOutcome.setText(""+totalOutcome);
+        dailyIncome.setText("+"+totalIncome);
+
+        total = totalIncome + totalOutcome;
+        if (total>0)
+        {
+            dailyTotal.setText("+" + total);
+        }
+        else
+        {
+            dailyTotal.setText(""+total);
+        }
+    }
 }

@@ -2,9 +2,12 @@ package com.example.sassydesign;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -32,6 +35,10 @@ public class HandAddActivity extends AppCompatActivity {
     EditText itemDetailTitle;
     Button completeButton;
 
+    String initDate="";
+    Date todayDate;
+    long now = System.currentTimeMillis();
+
     public static Activity handAddActivity;
 
 
@@ -55,7 +62,7 @@ public class HandAddActivity extends AppCompatActivity {
             }
         });
 
-        //사용자가 선택한 현금/카드 cashCard로 받아오기
+        //사용자가 선택한 현금/카드/기타 cashCard로 받아오기
         switchCCButton = findViewById(R.id.switchCCButton);
         switchCCButton.setOnSwitchListener(new SwitchMultiButton.OnSwitchListener() {
             @Override
@@ -66,17 +73,12 @@ public class HandAddActivity extends AppCompatActivity {
 
         //날짜 선택하는 버튼 누르면 선택된 날짜 selectedDate에 받아오기
         //selectedDate를 데베에 넣음
+
+        //오늘 날짜를 기본으로 설정해놓음.
         dateButton = findViewById(R.id.dateButton);
-        if (!((dateButton.getText().toString()).equals("날짜"))) {
-            Date selectedDate = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/mm/dd");
-            String dateMsg = dateButton.getText().toString();
-            try {
-                selectedDate = simpleDateFormat.parse(dateMsg);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
+        selectedDate = new Date(now);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        dateButton.setText(simpleDateFormat.format(selectedDate));
 
         //리싸이클러뷰 선언, 초기화, 어댑터 초기화
         RecyclerView recyclerView = findViewById(R.id.handAddRecyclerView);
@@ -86,39 +88,7 @@ public class HandAddActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         ItemDetailAdapter adapter = new ItemDetailAdapter();
 
-        //예시로 넣은 상세 품목들
-        adapter.addItem(new ItemDetail("과자", "1500", "1","식비"));
-        adapter.addItem(new ItemDetail("음료수", "2500","2","식비"));
-        adapter.addItem(new ItemDetail("커피", "3000", "3","식비"));
-
         recyclerView.setAdapter(adapter);
-
-        //@@@@@@@@@@아래부터 데베가 할 일@@@@@@@@@@
-        //완료버튼 누르면 데이터베이스에 전송
-        completeButton = findViewById(R.id.completeButton);
-        completeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for(int i=0; i< adapter.getItemCount(); i++) {
-                    //상세 품목 객체 하나를 tmp에 받아옴
-                    ItemDetail tmp = adapter.parsingData(i);
-                    //tmp의 get함수로 받아서 데베에 넣기
-                    String productName = tmp.getProductName();
-                    String productCost = tmp.getProductCost();
-                    String productQuantity = tmp.getProductQuantity();
-                    String selectedCategory =  tmp.getProductCategory();
-                }
-
-                //위에서 받아온 수입지출, 카드현금, 날짜, 제목 데베에 넣기
-
-
-
-
-                //액티비티 종료(건들면 안 됨)
-                HandAddActivity HA = (HandAddActivity) HandAddActivity.handAddActivity;
-                HA.finish();
-            }
-        });
 
 
         //+버튼 누르면 상세 품목 작성 칸 추가
@@ -128,21 +98,67 @@ public class HandAddActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ItemDetail itemDetail = null;
                 //기본 수량을 1로 설정
-                itemDetail = new ItemDetail("", "", "1", "");
+                itemDetail = new ItemDetail(null, null, "1", null);
 
                 adapter.addItem(itemDetail);
                 recyclerView.setAdapter(adapter);
             }
         });
 
-
-        //날짜버튼 누르면 날짜선택(이 아래부터 건들면 안 됨)
+        //날짜버튼 누르면 날짜선택
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePicker(v);
             }
         });
+
+        //@@@@@@@@@@아래부터 데베가 할 일@@@@@@@@@@
+        //완료버튼 누르면 데이터베이스에 전송
+        completeButton = findViewById(R.id.completeButton);
+        completeButton.setOnClickListener(new View.OnClickListener() {
+            String productName = "";
+            @Override
+            public void onClick(View v) {
+
+                /*년, 월, 일 처리 부분*/
+                String [] seperateDate = dateButton.getText().toString().split("/");
+                //여기서 년, 월, 일 나눠줌.
+                int year = Integer.parseInt(seperateDate[0]);
+                int month = Integer.parseInt(seperateDate[1]);
+                int day = Integer.parseInt(seperateDate[2]);
+
+                Log.d("this", year + "," + month+1 + ", " + day);
+
+                //윗 값을 데베에 넣으면 될거같아!
+
+
+
+                for(int i=0; i< adapter.getItemCount(); i++) {
+                    //상세 품목 객체 하나를 tmp에 받아옴
+                    ItemDetail tmp = adapter.getItem(i);
+                    //tmp의 get함수로 받아서 데베에 넣기
+                    productName = tmp.getProductName();
+                    String productCost = tmp.getProductCost();
+                    String productQuantity = tmp.getProductQuantity();
+                    String selectedCategory =  tmp.getCategory().getSelectedItem().toString();
+
+
+                    Toast.makeText(getApplicationContext(), productName+"", Toast.LENGTH_SHORT).show();
+
+                }
+
+                //위에서 받아온 수입지출, 카드현금, 날짜, 제목 데베에 넣기
+
+
+                //액티비티 종료(건들면 안 됨)
+                HandAddActivity HA = (HandAddActivity) HandAddActivity.handAddActivity;
+                HA.finish();
+
+            }
+        });
+
+
 
     }
 
@@ -157,8 +173,6 @@ public class HandAddActivity extends AppCompatActivity {
         String year_string = Integer.toString(year);
         String dateMessage = (year_string + "/" + month_string+"/"+day_string);
         dateButton.setText(dateMessage);
-
     }
-
 
 }

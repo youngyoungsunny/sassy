@@ -1,8 +1,11 @@
 package com.example.sassydesign;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -15,10 +18,7 @@ import java.util.ArrayList;
 public class ItemDetailAdapter extends RecyclerView.Adapter<ItemDetailAdapter.ViewHolder>{
 
     ArrayList<ItemDetail> items = new ArrayList<ItemDetail>();
-    String productName;
-    String productCost;
-    String productQuantity;
-    String selectedCategory;
+
 
     @NonNull
     @Override
@@ -40,7 +40,7 @@ public class ItemDetailAdapter extends RecyclerView.Adapter<ItemDetailAdapter.Vi
             }
         });
 
-        parsingData(position);
+        //parsingData(position);
 
     }
 
@@ -83,26 +83,100 @@ public class ItemDetailAdapter extends RecyclerView.Adapter<ItemDetailAdapter.Vi
         public ViewHolder(View itemView){
             super(itemView);
 
+            deleteButton = itemView.findViewById(R.id.deleteButton);
             productName = itemView.findViewById(R.id.productName);
             productCost = itemView.findViewById(R.id.productCost);
             category = itemView.findViewById(R.id.categorySpinner);
-            deleteButton = itemView.findViewById(R.id.deleteButton);
             productQuantity = itemView.findViewById(R.id.productQuantity);
+
 
         }
 
         public void setItem(ItemDetail item){
             productName.setText(item.getProductName());
-            productCost.setText(item.getProductCost());
-            productQuantity.setText(item.getProductQuantity());
-            selectedCategory = category.getSelectedItem().toString();
+            productName.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    item.setProductName(productName.getText().toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            productCost.setText(item.getProductCost());
+            productCost.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    item.setProductCost(productCost.getText().toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            productQuantity.setText(item.getProductQuantity());
+            productQuantity.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    item.setProductQuantity(productQuantity.getText().toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            //category.setSelection(0);
+            //selectedCategory = category.getSelectedItem().toString();
+            category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    //category.setSelection(position);
+
+                    selectedCategory = category.getSelectedItem().toString();
+                    if(selectedCategory.equals("카테고리")){
+                        //
+                    }
+                    else{
+                        selectedCategory = category.getSelectedItem().toString();
+                        item.setProductCategory(selectedCategory);
+                        item.setCategory(category);
+                        item.setPosition(position);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+
+            int position = item.getPosition();
+            category.setSelection(position);
         }
 
+
     }
 
-    //데이터베이스 넘겨줄 데이터 받아오기
-    public ItemDetail parsingData(int position) {
-        return items.get(position);
-    }
+//    //데이터베이스 넘겨줄 데이터 받아오기
+//    public ItemDetail parsingData(int position) {
+//        return items.get(position);
+//    }
 }

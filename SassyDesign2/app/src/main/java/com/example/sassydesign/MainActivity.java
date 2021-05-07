@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         //로그인 화면 종료
         LoginActivity LA = (LoginActivity) LoginActivity.activity;
-        LA.finish();
+//        LA.finish();
 
         //ID, PW 잘 넘어가는지 토스트 메시지로 확인
         Intent intent = getIntent();
